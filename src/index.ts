@@ -7,7 +7,7 @@ import { createClient } from "redis";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { context } from "./context";
-import { resolvers } from "@generated/type-graphql";
+import { resolvers } from "./@generated/type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { isDevelopment } from "./utils/helper.utils";
 

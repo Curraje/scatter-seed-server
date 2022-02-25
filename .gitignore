@@ -10,3 +10,4 @@ doc/
 .swc
 *.rdb
 *.sqlite
+src/@generated
