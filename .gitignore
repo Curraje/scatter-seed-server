@@ -8,3 +8,5 @@ node_modules/
 doc/
 *.db
 .swc
+*.rdb
+*.sqlite
