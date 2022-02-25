@@ -1,0 +1,10 @@
+.vscode
+build/
+node_modules/
+*.env
+*.log*
+*.bat
+*secrets.*
+doc/
+*.db
+.swc
