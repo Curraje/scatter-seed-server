@@ -54,7 +54,11 @@ const userData: Prisma.UserCreateInput[] = [
 const plantData: Prisma.PlantCreateInput[] = [];
 
 async function main() {
-  console.log(`Start seeding ...`);
+  console.log(`Start seeding... 🌱`);
+
+  // Lazy check, if user table has anything in it don't bother seeding
+  if ((await prisma.user.count()) > 0)
+    throw Error("Database already has data 💥. Run `prisma migrate reset` to reseed 🌱.");
 
   fs.createReadStream(path.resolve(__dirname, "PLANT_DATA.csv"))
     .pipe(csv.parse({ headers: true }))
@@ -73,13 +77,13 @@ async function main() {
       }
     });
 
-  // for (const u of userData) {
-  //   const user = await prisma.user.create({
-  //     data: u,
-  //   });
-  //   console.log(`Created user with id: ${user.id}`);
-  // }
-  // console.log(`Seeding finished.`);
+  for (const u of userData) {
+    const user = await prisma.user.create({
+      data: u,
+    });
+    console.log(`Created user with id: ${user.id}`);
+  }
+  console.log(`Seeding finished.`);
 }
 
 main()
