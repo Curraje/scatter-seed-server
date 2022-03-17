@@ -9,7 +9,8 @@
     "build": "swc --delete-dir-on-start -d build src",
     "build-dev": "cross-env NODE_ENV=development npm run build && node --inspect build/index.js",
     "start": "cross-env NODE_ENV=production npm run build && node build/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec \"npm run build-dev\""
+    "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec \"npm run build-dev\"",
+    "postinstall": "npx prisma migrate dev --init"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.26",
