@@ -19,7 +19,7 @@ import cors from "cors";
 
 import AuthRouter from "./routes/auth";
 
-const allowList: string[] = ["127.0.0.1"];
+const allowList: string[] = ["*"];
 
 // Dev DB
 const SQLiteStore = connectSqlite3(session);
@@ -35,11 +35,11 @@ if (!isDevelopment) {
 (async () => {
   const app = express();
 
+  app.set("trust proxy", "loopback");
+  app.disable("x-powered-by");
   app.use(morgan("short"));
   app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
   app.use(cors({ origin: allowList }));
-  app.set("trust proxy", "loopback");
-  app.disable("x-powered-by");
   app.use(compression());
 
   app.use(
@@ -66,7 +66,7 @@ if (!isDevelopment) {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers,
+      resolvers, // only for prototyping, will only expose some resolvers and use custom ones
     }),
     context,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
