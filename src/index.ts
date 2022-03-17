@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "dotenv/config";
 import express from "express";
 import session from "express-session";
 import connectRedis from "connect-redis";
@@ -10,6 +11,8 @@ import { context } from "./context";
 import { resolvers } from "./@generated/type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { isDevelopment } from "./utils/helper.utils";
+import { v4 as uuidv4 } from "uuid";
+import compression from "compression";
 
 // Dev DB
 const SQLiteStore = connectSqlite3(session);
@@ -17,11 +20,17 @@ const SQLiteStore = connectSqlite3(session);
 // Prod DB
 const RedisStore = connectRedis(session);
 const redisClient = createClient({ legacyMode: true });
-redisClient.connect().catch(console.error);
-redisClient.on("error", console.error);
+if (!isDevelopment) {
+  redisClient.connect().catch(console.error);
+  redisClient.on("error", console.error);
+}
 
 (async () => {
   const app = express();
+
+  app.set("trust proxy", "loopback");
+  app.disable("x-powered-by");
+  app.use(compression());
 
   app.use(
     session({
@@ -29,7 +38,7 @@ redisClient.on("error", console.error);
         ? new SQLiteStore({ db: "dev-cache.sqlite", concurrentDB: "true" })
         : new RedisStore({ client: redisClient }),
       name: "scatter-seed-api",
-      secret: "just initializing", // change secret
+      secret: process.env.SESSION_SECRET || uuidv4(), // change secret
       saveUninitialized: false,
       resave: false,
       cookie: {
@@ -39,6 +48,9 @@ redisClient.on("error", console.error);
       },
     })
   );
+
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({

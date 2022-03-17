@@ -1,0 +1,8 @@
+CommonName,BotanicalName,PlantType,SunExposure,SoilpH,BloomTime,FlowerColour,HardinessZones,SeedDepth,SproutsIn,IdealTemp,PlantSpacing,FrostHardy,MinFullSun,RowWidth,DaystoMaturity
+Tomato,Solanum lycopersicum,Vegetable,Full,"Acidic, Slightly Acidic to Neutral",Summer,Yellow,"4, 5, 6, 7, 8, 9, 10, 11",0.5-1cm,7-14 Days,25-35 C,45-60cm,NO,8-12hrs,1m,60-100
+Peppers,Capsicum sp.,Vegetable,Full,Slightly Acidic to Neutral,Summer,White,"4, 5, 6, 7, 8, 9, 10, 11",1cm,8-21 Days,18-27 C,45cm,NO,8-12hrs,45cm,60-90
+Cucumber,Cucumis sativas,Vegetable,Full,Slightly Acidic to Neutral,Summer,Yellow,"4, 5, 6, 7, 8, 9, 10, 11",1-2.5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90cm,45-75
+Beans,Phaseolus vulgaris,Vegetable,Full,Slightly Acidic to Neutral,Summer,"White, Yellow","3, 4, 5, 6, 7, 8, 9, 10",2-5cm,8-16 Days,9-25 C,5-8cm,NO,8-12hrs,45-60cm,50-55
+Summer Squash,Cucurbita spp.,Vegetable,Full,Slightly Acidic to Neutral,Summer,"Orange, Yellow","3, 4, 5, 6, 7, 8, 9",2-5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90-180cm,45-55
+Winter Squash,Cucurbita spp.,Vegetable,Full,Slightly Acidic to Neutral,Summer,"Orange, Yellow","3, 4, 5, 6, 7, 8, 9 ",2-5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90-180cm,50-55
+Carrots,Daucus carota subsp. Sativus,Vegetable,Full,Neutral,Second Summer,White,"3, 4, 5, 6, 7, 8, 9, 10",2-5mm,14-28 Days,10-24 C,5-8cm,YES,6-8hrs,30cm,60-120 

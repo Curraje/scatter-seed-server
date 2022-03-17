@@ -8,8 +8,8 @@ generator typegraphql {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -30,4 +30,27 @@ model Post {
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
+
+model Plant {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  CommonName String
+  BotanicalName String
+  PlantType String
+  SunExposure String
+  SoilpH String
+  BloomTime String
+  FlowerColour String
+  HardinessZones String
+  SeedDepth String
+  SproutsIn String
+  IdealTemp String
+  PlantSpacing String
+  FrostHardy String
+  MinFullSun String
+  RowWidth String
+  DaystoMaturity String
+}
+
 

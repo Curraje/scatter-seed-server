@@ -1,4 +1,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import * as csv from "fast-csv";
+import * as fs from "fs";
+import * as path from "path";
 
 const prisma = new PrismaClient();
 
@@ -48,15 +51,35 @@ const userData: Prisma.UserCreateInput[] = [
   },
 ];
 
+const plantData: Prisma.PlantCreateInput[] = [];
+
 async function main() {
   console.log(`Start seeding ...`);
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
+
+  fs.createReadStream(path.resolve(__dirname, "PLANT_DATA.csv"))
+    .pipe(csv.parse({ headers: true }))
+    .on("error", (error) => console.error(error))
+    .on("data", (row) => {
+      plantData.push(row);
+      console.log(row);
+    })
+    .on("end", async (rowCount: number) => {
+      console.log(`Parsed ${rowCount} rows`);
+      for (const p of plantData) {
+        const plant = await prisma.plant.create({
+          data: p,
+        });
+        console.log(`Created plant with id: ${plant.id}`);
+      }
     });
-    console.log(`Created user with id: ${user.id}`);
-  }
-  console.log(`Seeding finished.`);
+
+  // for (const u of userData) {
+  //   const user = await prisma.user.create({
+  //     data: u,
+  //   });
+  //   console.log(`Created user with id: ${user.id}`);
+  // }
+  // console.log(`Seeding finished.`);
 }
 
 main()
