@@ -7,10 +7,15 @@
   "scripts": {
     "docgen": "openapi-generator-cli generate -i api.yaml -g html2 -0 ./doc",
     "build": "swc --delete-dir-on-start -d build src",
-    "build-dev": "cross-env NODE_ENV=development npm run build && node --inspect build/index.js",
+    "build:dev": "npm run build && cross-env NODE_ENV=development node --inspect=7121 build/index.js",
     "start": "cross-env NODE_ENV=production npm run build && node build/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec \"npm run build-dev\"",
-    "postinstall": "npx prisma migrate dev --init"
+    "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec \"npm run build:dev\"",
+    "schemagen": "npx prisma generate",
+    "db:seed": "npx prisma db seed",
+    "db:migrate": "npx prisma migrate dev",
+    "db:push": "npx prisma db push",
+    "db:studio": "npx prisma studio",
+    "db:status": "npx prisma migrate status"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.26",
