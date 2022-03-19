@@ -19,14 +19,21 @@ import cors from "cors";
 
 import AuthRouter from "./routes/auth";
 
-const allowList: string[] = ["*"];
+const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
+
+const allowList: string = isDevelopment ? "*" : HOSTNAME;
+
+const corsOptions = {
+  origin: allowList,
+  credentials: true,
+};
 
 // Dev DB
 const SQLiteStore = connectSqlite3(session);
 
 // Prod DB
 const RedisStore = connectRedis(session);
-const redisClient = createClient({ legacyMode: true });
+const redisClient = createClient({ legacyMode: true, url: process.env.REDIS_URL });
 if (!isDevelopment) {
   redisClient.connect().catch(console.error);
   redisClient.on("error", console.error);
@@ -38,8 +45,8 @@ if (!isDevelopment) {
   app.set("trust proxy", "loopback");
   app.disable("x-powered-by");
   app.use(morgan("short"));
-  app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
-  app.use(cors({ origin: allowList }));
+  app.use(helmet({ contentSecurityPolicy: isDevelopment ? false : undefined }));
+  app.use(cors(corsOptions));
   app.use(compression());
 
   app.use(
@@ -69,12 +76,12 @@ if (!isDevelopment) {
       resolvers, // only for prototyping, will only expose some resolvers and use custom ones
     }),
     context,
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    plugins: isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : [],
   });
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   // Not Found Handler
   app.use((req, res) => {
@@ -99,7 +106,7 @@ if (!isDevelopment) {
   const port = process.env.PORT || 4000;
   app.listen(port, () => {
     console.log(
-      `🚀 Server ready at: http://localhost:${port}\n⭐️ See sample queries: http://pris.ly/e/ts/graphql-typegraphql-crud#using-the-graphql-api`
+      `🚀 Server ready at: ${HOSTNAME}:${port}\n⭐️ See sample queries: http://pris.ly/e/ts/graphql-typegraphql-crud#using-the-graphql-api`
     );
   });
 })();
