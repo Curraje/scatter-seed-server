@@ -11,6 +11,8 @@ export const SALT_ROUNDS = 10;
 
 // Token Creation Functions
 
+// TODO: Implement Remember Me
+
 export async function createAccessToken(id: string, username: string, role: string) {
   return sign({ id, username, role }, SECRET, {
     expiresIn: "15min",

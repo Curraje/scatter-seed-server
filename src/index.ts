@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import "dotenv/config";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { ArgumentValidationError, buildSchema } from "type-graphql";
 import { prisma } from "./context";
@@ -47,11 +47,21 @@ const corsOptions = {
     })
   );
 
-  // app.use(function (err: Error, req: Request, res: Response) {
-  //   if (err.name === "UnauthorizedError") {
-  //     res.status(401).send({ message: "Invalid token..." });
-  //   }
-  // });
+  app.use(async function (err: Error, req: Request, res: Response, next: NextFunction) {
+    if (err.name === "UnauthorizedError") {
+      res
+        .status(401)
+        .send({
+          errors: [
+            {
+              message: err.message.includes("expired")
+                ? "Your login has expired."
+                : "Invalid Token sent...",
+            },
+          ],
+        });
+    }
+  });
 
   const apolloServer = new ApolloServer({
     schema: applyMiddleware(
@@ -84,6 +94,13 @@ const corsOptions = {
 
       return error;
     },
+    // formatResponse: (response, requestContext) => {
+    //   if (response.errors)
+    //     if (requestContext.response?.http) {
+    //       requestContext.response.http.status = 401;
+    //     }
+    //   return response;
+    // },
   });
 
   await apolloServer.start();
