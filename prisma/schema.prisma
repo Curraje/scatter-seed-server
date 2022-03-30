@@ -20,6 +20,8 @@ enum UserRole {
 model User {
   /// @TypeGraphQL.omit(output: true)
   id    Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   uuid  String  @default(uuid()) @unique
   role  UserRole @default(USER)
   username String @unique

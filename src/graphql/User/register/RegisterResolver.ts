@@ -10,11 +10,11 @@ export class RegisterResolver {
   @Mutation(() => User)
   async register(
     @Arg("payload") { username, email, password }: RegisterInput,
-    @Ctx() { prisma }: Context
+    @Ctx() ctx: Context
   ) {
     try {
       const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-      const user = await prisma.user.create({
+      const user = await ctx.prisma.user.create({
         data: {
           username,
           email,
@@ -22,7 +22,7 @@ export class RegisterResolver {
         },
       });
 
-      return { uuid: user.uuid, email: user.email, username: user.username, role: user.role };
+      return user;
     } catch (err) {
       console.error(err);
       return err;

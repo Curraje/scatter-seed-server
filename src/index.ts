@@ -11,8 +11,11 @@ import compression from "compression";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
-import { RegisterResolver } from "./graphql";
 import { GraphQLFormattedError } from "graphql";
+import { RegisterResolver, LoginResolver, MeResolver } from "./graphql";
+import expressJwt from "express-jwt";
+import { permissions, SECRET } from "./services/auth.service";
+import { applyMiddleware } from "graphql-middleware";
 
 const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
@@ -36,10 +39,21 @@ const corsOptions = {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  app.use(
+    expressJwt({
+      secret: SECRET,
+      algorithms: ["HS256"],
+      credentialsRequired: false,
+    })
+  );
+
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [RegisterResolver, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
-    }),
+    schema: applyMiddleware(
+      await buildSchema({
+        resolvers: [RegisterResolver, LoginResolver, MeResolver, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
+      }),
+      permissions
+    ),
     context: ({ req, res }) => ({ req, res, prisma }),
     plugins: isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : [],
     formatError: (error): GraphQLFormattedError => {
@@ -67,7 +81,6 @@ const corsOptions = {
   });
 
   await apolloServer.start();
-
   apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   // Not Found Handler
