@@ -18,10 +18,13 @@ enum UserRole {
 }
 
 model User {
+  /// @TypeGraphQL.omit(output: true)
   id    Int     @id @default(autoincrement())
+  uuid  String  @default(uuid()) @unique
   role  UserRole @default(USER)
   username String @unique
   email String  @unique
+  /// @TypeGraphQL.omit(output: true)
   password String
   name  String?
   posts Post[]

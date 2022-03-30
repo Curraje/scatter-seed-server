@@ -1,23 +1,18 @@
 import "reflect-metadata";
 import "dotenv/config";
 import express from "express";
-import session from "express-session";
-import connectRedis from "connect-redis";
-import connectSqlite3 from "connect-sqlite3";
-import { createClient } from "redis";
 import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
-import { context } from "./context";
+import { ArgumentValidationError, buildSchema } from "type-graphql";
+import { prisma } from "./context";
 import { resolvers } from "./@generated/type-graphql";
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ApolloError, ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { isDevelopment } from "./utils/helper.utils";
-import { v4 as uuidv4 } from "uuid";
 import compression from "compression";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
-
-import AuthRouter from "./routes/auth";
+import { RegisterResolver } from "./graphql";
+import { GraphQLFormattedError } from "graphql";
 
 const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
@@ -27,17 +22,6 @@ const corsOptions = {
   origin: allowList,
   credentials: true,
 };
-
-// Dev DB
-const SQLiteStore = connectSqlite3(session);
-
-// Prod DB
-const RedisStore = connectRedis(session);
-const redisClient = createClient({ legacyMode: true, url: process.env.REDIS_URL });
-if (!isDevelopment) {
-  redisClient.connect().catch(console.error);
-  redisClient.on("error", console.error);
-}
 
 (async () => {
   const app = express();
@@ -49,34 +33,37 @@ if (!isDevelopment) {
   app.use(cors(corsOptions));
   app.use(compression());
 
-  app.use(
-    session({
-      store: isDevelopment
-        ? new SQLiteStore({ db: "dev-cache.sqlite", concurrentDB: "true" })
-        : new RedisStore({ client: redisClient }),
-      name: "scatter-seed-sid",
-      secret: process.env.SESSION_SECRET || uuidv4(), // change secret
-      saveUninitialized: false,
-      resave: false,
-      cookie: {
-        httpOnly: true,
-        secure: !isDevelopment,
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // ms -> s -> h -> d -> w -> y = 7 years
-      },
-    })
-  );
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.use("/auth", AuthRouter);
-
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers, // only for prototyping, will only expose some resolvers and use custom ones
+      resolvers: [RegisterResolver, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
     }),
-    context,
+    context: ({ req, res }) => ({ req, res, prisma }),
     plugins: isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : [],
+    formatError: (error): GraphQLFormattedError => {
+      if (error.originalError instanceof ApolloError) {
+        return error;
+      }
+
+      if (error.originalError instanceof ArgumentValidationError) {
+        const { extensions, locations, message, path } = error;
+
+        if (error && error.extensions) {
+          error.extensions.code = "BAD_USER_INPUT";
+        }
+
+        return {
+          message,
+          locations,
+          path,
+          extensions,
+        };
+      }
+
+      return error;
+    },
   });
 
   await apolloServer.start();
