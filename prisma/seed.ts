@@ -2,13 +2,16 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import * as csv from "fast-csv";
 import * as fs from "fs";
 import * as path from "path";
+import * as bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 const userData: Prisma.UserCreateInput[] = [
   {
     name: "Alice",
+    username: "alicethebest",
     email: "alice@prisma.io",
+    password: "",
     posts: {
       create: [
         {
@@ -22,6 +25,8 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Nilu",
     email: "nilu@prisma.io",
+    username: "nilutheworst",
+    password: "",
     posts: {
       create: [
         {
@@ -35,6 +40,8 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Mahmoud",
     email: "mahmoud@prisma.io",
+    username: "mahmoudthegod",
+    password: "",
     posts: {
       create: [
         {
@@ -78,6 +85,7 @@ async function main() {
     });
 
   for (const u of userData) {
+    u.password = await bcrypt.hash("sick_password", 10);
     const user = await prisma.user.create({
       data: u,
     });
