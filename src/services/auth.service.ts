@@ -44,9 +44,11 @@ export const permissions = shield(
   {
     Mutation: {
       register: not(isAuthenticated),
+      login: not(isAuthenticated), // only testing
     },
   },
   {
+    allowExternalErrors: true,
     fallbackError: new AuthenticationError("Not Authorized!"),
   }
 );
