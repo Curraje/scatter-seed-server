@@ -5,7 +5,6 @@
   "main": "index.js",
   "license": "GPL-3.0 License",
   "scripts": {
-    "docgen": "openapi-generator-cli generate -i api.yaml -g html2 -0 ./doc",
     "build": "swc --delete-dir-on-start -d build src",
     "build:dev": "npm run build && cross-env NODE_ENV=development node --inspect=7121 build/index.js",
     "start": "npm run build && node build/index.js",
@@ -18,9 +17,6 @@
     "db:status": "npx prisma migrate status"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.4.26",
-    "@swc/cli": "^0.1.55",
-    "@swc/core": "^1.2.145",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/connect-redis": "^0.0.18",
@@ -44,6 +40,8 @@
   },
   "dependencies": {
     "@prisma/client": "3.10.0",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.163",
     "apollo-server-core": "^3.6.3",
     "apollo-server-express": "^3.6.3",
     "bcrypt": "^5.0.1",
