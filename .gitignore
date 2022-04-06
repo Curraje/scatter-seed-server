@@ -11,3 +11,4 @@ doc/
 *.rdb
 *.sqlite
 src/@generated
+schema.gql

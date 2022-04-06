@@ -65,6 +65,7 @@ const corsOptions = {
     schema: applyMiddleware(
       await buildSchema({
         resolvers: [...customResolvers, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
+        emitSchemaFile: isDevelopment,
       }),
       permissions
     ),
