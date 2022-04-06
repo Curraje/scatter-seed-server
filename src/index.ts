@@ -94,6 +94,7 @@ const corsOptions = {
 
       return error;
     },
+    introspection: true,
     // formatResponse: (response, requestContext) => {
     //   if (response.errors)
     //     if (requestContext.response?.http) {
