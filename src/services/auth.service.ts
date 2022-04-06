@@ -44,8 +44,8 @@ const isAdmin = rule({ cache: "contextual" })(async (parent, args, ctx: Context,
 export const permissions = shield(
   {
     Mutation: {
-      register: not(isAuthenticated),
-      login: not(isAuthenticated), // only testing
+      // register: not(isAuthenticated),
+      // login: not(isAuthenticated), // only testing
     },
   },
   {
