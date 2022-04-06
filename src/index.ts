@@ -19,7 +19,7 @@ import { applyMiddleware } from "graphql-middleware";
 
 const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
-const allowList: string = isDevelopment ? "*" : HOSTNAME;
+const allowList: string = "*";
 
 const corsOptions = {
   origin: allowList,
@@ -49,17 +49,15 @@ const corsOptions = {
 
   app.use(async function (err: Error, req: Request, res: Response, next: NextFunction) {
     if (err.name === "UnauthorizedError") {
-      res
-        .status(401)
-        .send({
-          errors: [
-            {
-              message: err.message.includes("expired")
-                ? "Your login has expired."
-                : "Invalid Token sent...",
-            },
-          ],
-        });
+      res.status(401).send({
+        errors: [
+          {
+            message: err.message.includes("expired")
+              ? "Your login has expired."
+              : "Invalid Token sent...",
+          },
+        ],
+      });
     }
   });
 

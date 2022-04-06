@@ -5,5 +5,6 @@ declare namespace NodeJS {
     PORT: string;
     SESSION_SECRET: string;
     HOSTNAME: string;
+    WEATHER_API_KEY: string;
   }
 }
