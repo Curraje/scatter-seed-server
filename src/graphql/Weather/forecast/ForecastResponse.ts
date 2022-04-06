@@ -4,7 +4,7 @@ import { ForecastDay } from "../models/ForecastDay";
 import { RealtimeResponse } from "../realtime/RealtimeResponse";
 
 @ObjectType()
-class ForecastWrapper {
+export class ForecastWrapper {
   @Field(() => [ForecastDay])
   forecastday: ForecastDay[];
 }
