@@ -7,6 +7,15 @@ const weather = axios.create({
   baseURL: `https://api.weatherapi.com/v1/`,
 });
 
+weather.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return error?.response ?? Promise.reject(error);
+  }
+);
+
 class WeatherService {
   /**
  * 
@@ -26,11 +35,20 @@ class WeatherService {
  * @returns Weather Data, always has location key.
  */
   async query(type: Weather.QueryType, query: string, params?: Weather.QueryParams) {
-    const res = await weather.get(
-      `${type}.json?key=${WEATHER_API_KEY}&q=${query}${params ? `&${toQueryString(params)}` : ""}`
-    );
+    try {
+      const res = await weather.get(
+        `${type}.json?key=${WEATHER_API_KEY}&q=${query}${params ? `&${toQueryString(params)}` : ""}`
+      );
 
-    return res.data;
+      return res.data;
+    } catch (err) {
+      return {
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Unknown error occurred while fetching ${type} weather data.`,
+        },
+      };
+    }
   }
 }
 
