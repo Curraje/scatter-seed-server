@@ -92,6 +92,8 @@ const corsOptions = {
         };
       }
 
+      console.error(error, null, 2); // log error message
+
       return error;
     },
     introspection: true,
