@@ -7,7 +7,7 @@ import { AstronomyResponse } from "./AstronomyResponse";
 @Resolver()
 export class AstronomyResolver {
   @Query(() => AstronomyResponse)
-  async astronomy(@Arg("payload") { query, dt }: AstronomyInput) {
+  async weather_astronomy(@Arg("payload") { query, dt }: AstronomyInput) {
     const data = await WeatherService.query("astronomy", query, {
       dt,
     });

@@ -7,7 +7,7 @@ import { HistoryResponse } from "./HistoryResponse";
 @Resolver()
 export class HistoryResolver {
   @Query(() => HistoryResponse)
-  async history(@Arg("payload") { query, dt, hour }: HistoryInput) {
+  async weather_history(@Arg("payload") { query, dt, hour }: HistoryInput) {
     const data = await WeatherService.query("history", query, {
       dt,
       hour,

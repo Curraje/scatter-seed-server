@@ -7,7 +7,7 @@ import { RealtimeResponse } from "./RealtimeResponse";
 @Resolver()
 export class RealtimeResolver {
   @Query(() => RealtimeResponse)
-  async realtime(@Arg("payload") { query, includeAirQuality }: RealtimeInput) {
+  async weather_realtime(@Arg("payload") { query, includeAirQuality }: RealtimeInput) {
     const data = await WeatherService.query("current", query, {
       aqi: includeAirQuality ? "yes" : "no",
     });

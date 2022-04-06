@@ -7,7 +7,7 @@ import { ForecastResponse } from "./ForecastResponse";
 @Resolver()
 export class ForecastResolver {
   @Query(() => ForecastResponse)
-  async forecast(
+  async weather_forecast(
     @Arg("payload") { query, days, includeAirQuality, includeAlerts, hour }: ForecastInput
   ) {
     const data = await WeatherService.query("forecast", query, {
