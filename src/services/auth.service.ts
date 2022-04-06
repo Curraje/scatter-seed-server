@@ -14,7 +14,7 @@ export const SALT_ROUNDS = 10;
 
 export async function createAccessToken(id: string, username: string, role: string) {
   return sign({ id, username, role }, SECRET, {
-    expiresIn: "15min",
+    // expiresIn: "15min",
     algorithm: "HS256",
     subject: username,
   });
@@ -22,7 +22,7 @@ export async function createAccessToken(id: string, username: string, role: stri
 
 export async function createRefreshToken(id: string, username: string, role: string) {
   return sign({ id, username, role }, SECRET, {
-    expiresIn: "7d",
+    // expiresIn: "7d",
     algorithm: "HS256",
     subject: username,
   });
