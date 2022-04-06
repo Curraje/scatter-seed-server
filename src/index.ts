@@ -32,7 +32,7 @@ const corsOptions = {
   app.set("trust proxy", "loopback");
   app.disable("x-powered-by");
   app.use(morgan("short"));
-  app.use(helmet({ contentSecurityPolicy: false })); // { contentSecurityPolicy: isDevelopment ? false : undefined }
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false })); // { contentSecurityPolicy: isDevelopment ? false : undefined }
   app.use(cors(corsOptions));
   app.use(compression());
 
