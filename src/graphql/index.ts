@@ -1,3 +1,7 @@
-export { RegisterResolver } from "./User/register/RegisterResolver";
-export { LoginResolver } from "./User/login/LoginResolver";
-export { MeResolver } from "./User/me/MeResolver";
+import { RegisterResolver } from "./User/register/RegisterResolver";
+import { LoginResolver } from "./User/login/LoginResolver";
+import { MeResolver } from "./User/me/MeResolver";
+
+const customResolvers = [RegisterResolver, LoginResolver, MeResolver] as const;
+
+export { customResolvers, RegisterResolver, LoginResolver, MeResolver };

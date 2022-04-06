@@ -12,7 +12,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import { GraphQLFormattedError } from "graphql";
-import { RegisterResolver, LoginResolver, MeResolver } from "./graphql";
+import { customResolvers } from "./graphql";
 import expressJwt from "express-jwt";
 import { permissions, SECRET } from "./services/auth.service";
 import { applyMiddleware } from "graphql-middleware";
@@ -64,7 +64,7 @@ const corsOptions = {
   const apolloServer = new ApolloServer({
     schema: applyMiddleware(
       await buildSchema({
-        resolvers: [RegisterResolver, LoginResolver, MeResolver, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
+        resolvers: [...customResolvers, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
       }),
       permissions
     ),
