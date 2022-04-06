@@ -20,9 +20,10 @@ export class AirQuality {
   @Field()
   pm10: number;
 
-  @Field()
-  "us-epa-index": number;
+  // HACK: Exclude for now, probably won't even use the data
+  // @Field()
+  // us_epa_index: number;
 
-  @Field()
-  "gb-defra-index": number;
+  // @Field()
+  // gb_defra_index: number;
 }

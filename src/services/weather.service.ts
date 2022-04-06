@@ -3,11 +3,12 @@ import { toQueryString } from "../utils/object.utils";
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY || "invalid_key";
 
-export const weather = axios.create({
+const weather = axios.create({
   baseURL: `https://api.weatherapi.com/v1/`,
 });
 
-/**
+class WeatherService {
+  /**
  * 
  * @param type The type of request to make to the weather api.
  * @param query Query parameter based on which data is sent back:
@@ -24,14 +25,13 @@ export const weather = axios.create({
  * @param params Optional or Mandatory (depending on type of request) request parameters.
  * @returns Weather Data, always has location key.
  */
-export async function queryWeather(
-  type: Weather.QueryType,
-  query: string,
-  params?: Weather.QueryParams
-) {
-  const res = await weather.get(
-    `${type}.json?key=${WEATHER_API_KEY}&q=${query}${params ? `&${toQueryString(params)}` : ""}`
-  );
+  async query(type: Weather.QueryType, query: string, params?: Weather.QueryParams) {
+    const res = await weather.get(
+      `${type}.json?key=${WEATHER_API_KEY}&q=${query}${params ? `&${toQueryString(params)}` : ""}`
+    );
 
-  return res.data;
+    return res.data;
+  }
 }
+
+export default new WeatherService();

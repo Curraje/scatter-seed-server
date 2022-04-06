@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { Condition } from "../interfaces";
+import { Condition } from "./Condition";
 
 @ObjectType()
 export class WeatherData {
@@ -12,7 +12,7 @@ export class WeatherData {
   @Field()
   is_day: number;
 
-  @Field()
+  @Field(() => Condition)
   condition: Condition;
 
   @Field()

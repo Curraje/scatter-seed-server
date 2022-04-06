@@ -10,6 +10,6 @@ export class Current extends WeatherData {
   @Field()
   last_updated: string;
 
-  @Field(() => AirQuality)
-  air_quality: AirQuality;
+  @Field(() => AirQuality, { nullable: true })
+  air_quality?: AirQuality;
 }
