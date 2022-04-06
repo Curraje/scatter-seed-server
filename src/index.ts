@@ -82,6 +82,25 @@ const corsOptions = {
 
         if (error && error.extensions) {
           error.extensions.code = "BAD_USER_INPUT";
+
+          if (error.extensions?.exception?.validationErrors) {
+            const validationErrors = error.extensions.exception.validationErrors.map((val: any) => {
+              const constraints = Object.keys(val?.constraints)?.map((key: any) => {
+                return {
+                  code: key,
+                  message: val?.constraints[key],
+                };
+              });
+
+              return {
+                ...val,
+                errors: constraints,
+                constraints: undefined,
+              };
+            });
+
+            error.extensions.exception.validationErrors = validationErrors;
+          }
         }
 
         return {
