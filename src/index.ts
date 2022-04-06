@@ -32,7 +32,7 @@ const corsOptions = {
   app.set("trust proxy", "loopback");
   app.disable("x-powered-by");
   app.use(morgan("short"));
-  app.use(helmet({ contentSecurityPolicy: isDevelopment ? false : undefined }));
+  app.use(helmet()); // { contentSecurityPolicy: isDevelopment ? false : undefined }
   app.use(cors(corsOptions));
   app.use(compression());
 
@@ -70,7 +70,8 @@ const corsOptions = {
       permissions
     ),
     context: ({ req, res }) => ({ req, res, prisma }),
-    plugins: isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : [],
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    // isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : []
     formatError: (error): GraphQLFormattedError => {
       if (error.originalError instanceof ApolloError) {
         return error;
@@ -93,7 +94,6 @@ const corsOptions = {
 
       return error;
     },
-    introspection: true,
     // formatResponse: (response, requestContext) => {
     //   if (response.errors)
     //     if (requestContext.response?.http) {
