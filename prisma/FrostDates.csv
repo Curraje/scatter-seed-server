@@ -1,0 +1,55 @@
+Province,City,LastFrost,FirstFrost,HardinessZone
+Newfoundland & Labrador,Corner Brook,21-May,20-Oct,5a
+Newfoundland & Labrador,Grand Falls,21-May,10-Oct,4b
+Newfoundland & Labrador,St. John's,21-May,20-Oct,5b
+Nova Scotia,Halifax,21-Apr,20-Oct,6b
+Nova Scotia,Kentville,11-May,10-Oct,6a
+Nova Scotia,Shelburne,01-May,20-Sep,6b
+Nova Scotia,Sydney,11-May,20-Oct,6a
+Nova Scotia,Yarmouth,21-Apr,20-Oct,7
+Prince Edward Island,Charlottetown,11-May,20-Oct,6a
+Prince Edward Island,Summerside,21-Apr,10-Oct,5b
+Prince Edward Island,Tignish,01-May,10-Oct,5b
+New Brunswick,Bathurst,11-May,30-Sep,4b
+New Brunswick,Edmunston,11-May,30-Sep,4a
+New Brunswick,Fredericton,11-May,30-Sep,5b
+New Brunswick,Grand Falls,11-May,30-Sep,4a
+New Brunswick,Moncton,11-May,10-Oct,5a
+New Brunswick,Saint John,01-May,30-Oct,5a
+Quebec,Baie-Comeau,21-May,20-Sep,4a
+Quebec,Montreal,21-Apr,10-Oct,5a
+Quebec,Quebec City,01-May,30-Sep,6b
+Ontario,Barrie,11-May,10-Oct,5b
+Ontario,Hamilton,01-May,20-Oct,6b
+Ontario,Kingston,21-Apr,10-Oct,6a
+Ontario,London,01-May,10-Oct,6b
+Ontario,Ottawa,01-May,10-Oct,5b
+Ontario,Owen Sound,01-May,10-Oct,6a
+Ontario,Parry Sound,21-May,20-Sep,5b
+Ontario,Peterborough,01-May,30-Sep,5b
+Ontario,St. Catherines,21-May,10-Nov,7a
+Ontario,Sudbury,11-May,30-Sep,4b
+Ontario,Thunder Bay,21-Jun,20-Sep,3b
+Ontario,Timmins,01-Jun,15-Sep,3a
+Ontario,Toronto,11-May,10-Nov,5b
+Ontario,Windsor,11-Apr,31-Oct,7a
+Manitoba,Brandon,21-May,20-Sep,3b
+Manitoba,The Pas,21-May,20-Sep,2b
+Manitoba,Thompson,11-Jun,20-Aug,1b
+Manitoba,Winnipeg,21-May,30-Sep,3b
+Saskatchewan,Moose Jaw,11-May,20-Sep,3b
+Saskatchewan,Prince Albert,21-May,20-Sep,3a
+Saskatchewan,Regina,11-May,20-Sep,3b
+Saskatchewan,Saskatoon,01-Jun,20-Sep,3b
+Saskatchewan,Weyburn,11-May,20-Sep,4a
+Alberta,Athabasca,21-May,10-Sep,3a
+Alberta,Calgary,11-May,20-Sep,4a
+Alberta,Edmonton,01-May,20-Sep,4a
+Alberta,Grande Prairie,11-May,10-Sep,3b
+Alberta,Lethbridge,21-May,10-Sep,4b
+Alberta,Medicine Hat,11-May,30-Sep,4b
+Alberta,Red Deer,11-May,20-Sep,4a
+Northwest Territories,Yellowknife,25-May,17-Sep,0b
+Nunavut,Iqaluit,02-Jul,05-Sep,0a
+Yukon,Dawson City,10-Jun,05-Sep,1a
+Yukon,Whitehorse,10-Jun,28-Aug,1a
