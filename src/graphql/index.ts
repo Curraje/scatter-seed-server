@@ -6,6 +6,7 @@ import { ForecastResolver } from "./Weather/forecast/ForecastResolver";
 import { AstronomyResolver } from "./Weather/astronomy/AstronomyResolver";
 import { HistoryResolver } from "./Weather/history/HistoryResolver";
 import { SearchResolver } from "./Weather/search/SearchResolver";
+import { TimezoneResolver } from "./Weather/timezone/TimezoneResolver";
 
 const userResolvers = [RegisterResolver, LoginResolver, MeResolver] as const;
 
@@ -15,6 +16,7 @@ const weatherResolvers = [
   AstronomyResolver,
   HistoryResolver,
   SearchResolver,
+  TimezoneResolver,
 ] as const;
 
 const customResolvers = [...userResolvers, ...weatherResolvers] as const;
@@ -31,4 +33,5 @@ export {
   AstronomyResolver,
   HistoryResolver,
   SearchResolver,
+  TimezoneResolver,
 };
