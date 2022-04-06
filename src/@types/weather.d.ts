@@ -21,7 +21,7 @@ declare namespace Weather {
     alerts?: "yes" | "no";
     /** Required for Forecast
      * - integer between 1-10 */
-    days?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 9 | 10;
+    days?: number;
     /** Optional for Current and Forecast - Air Quality Data:
      * - Yes or No */
     aqi?: "yes" | "no";

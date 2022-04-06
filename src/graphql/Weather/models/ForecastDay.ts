@@ -17,6 +17,6 @@ export class ForecastDay {
   @Field(() => Astro)
   astro: Astro;
 
-  @Field(() => Hour)
+  @Field(() => [Hour])
   hour: Hour[];
 }
