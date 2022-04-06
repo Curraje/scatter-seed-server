@@ -12,14 +12,14 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import { GraphQLFormattedError } from "graphql";
-import { RegisterResolver, LoginResolver, MeResolver } from "./graphql";
+import { customResolvers } from "./graphql";
 import expressJwt from "express-jwt";
 import { permissions, SECRET } from "./services/auth.service";
 import { applyMiddleware } from "graphql-middleware";
 
 const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
-const allowList: string = isDevelopment ? "*" : HOSTNAME;
+const allowList: string = "*";
 
 const corsOptions = {
   origin: allowList,
@@ -49,24 +49,22 @@ const corsOptions = {
 
   app.use(async function (err: Error, req: Request, res: Response, next: NextFunction) {
     if (err.name === "UnauthorizedError") {
-      res
-        .status(401)
-        .send({
-          errors: [
-            {
-              message: err.message.includes("expired")
-                ? "Your login has expired."
-                : "Invalid Token sent...",
-            },
-          ],
-        });
+      res.status(401).send({
+        errors: [
+          {
+            message: err.message.includes("expired")
+              ? "Your login has expired."
+              : "Invalid Token sent...",
+          },
+        ],
+      });
     }
   });
 
   const apolloServer = new ApolloServer({
     schema: applyMiddleware(
       await buildSchema({
-        resolvers: [RegisterResolver, LoginResolver, MeResolver, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
+        resolvers: [...customResolvers, ...resolvers], // only for prototyping, will only expose some resolvers and use custom ones
       }),
       permissions
     ),

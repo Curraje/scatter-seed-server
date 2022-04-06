@@ -2,8 +2,7 @@ import { sign } from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { not, rule, shield } from "graphql-shield";
 import { Context } from "../context";
-import { isContext } from "vm";
-import { ApolloError, AuthenticationError } from "apollo-server-core";
+import { AuthenticationError } from "apollo-server-core";
 
 export const SECRET = process.env.SESSION_SECRET || uuidv4();
 
