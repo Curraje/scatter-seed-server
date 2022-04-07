@@ -112,6 +112,8 @@ model BedPlant {
   Bed       Bed?     @relation(fields: [bedId], references: [id])
   bedId     Int?
   plantId   Int
+
+  @@unique([bedId, plantId])
 }
 
 model FrostDate {
