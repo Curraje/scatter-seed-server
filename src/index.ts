@@ -73,6 +73,8 @@ const corsOptions = {
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     // isDevelopment ? [ApolloServerPluginLandingPageGraphQLPlayground()] : []
     formatError: (error): GraphQLFormattedError => {
+      console.error(JSON.stringify(error, null, 2)); // log error message
+
       if (error.originalError instanceof ApolloError) {
         return error;
       }
@@ -110,8 +112,6 @@ const corsOptions = {
           extensions,
         };
       }
-
-      console.error(error, null, 2); // log error message
 
       return error;
     },
