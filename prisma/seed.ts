@@ -121,10 +121,6 @@ async function main() {
     });
     console.log(`Created user with id: ${user.id}`);
   }
-  console.log("🌿 Plant Rows: ", await prisma.plant.count());
-  console.log("🍧 Frost Date Rows:", await prisma.frostDate.count());
-  console.log("👤 User Rows:", await prisma.user.count());
-  console.log(`🌱 Seeding Complete! ✅`);
 }
 
 main()
@@ -133,5 +129,9 @@ main()
     process.exit(1);
   })
   .finally(async () => {
+    console.log("🌿 Plant Rows: ", await prisma.plant.count());
+    console.log("🍧 Frost Date Rows:", await prisma.frostDate.count());
+    console.log("👤 User Rows:", await prisma.user.count());
+    console.log(`🌱 Seeding Complete! ✅`);
     await prisma.$disconnect();
   });
