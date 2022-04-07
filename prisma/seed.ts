@@ -12,6 +12,7 @@ const userData: Prisma.UserCreateInput[] = [
     username: "alicethebest",
     email: "alice@prisma.io",
     password: "",
+    location: "Ottawa, Ontario",
     posts: {
       create: [
         {
@@ -27,6 +28,7 @@ const userData: Prisma.UserCreateInput[] = [
     email: "nilu@prisma.io",
     username: "nilutheworst",
     password: "",
+    location: "Toronto, Ontario",
     posts: {
       create: [
         {
@@ -42,6 +44,7 @@ const userData: Prisma.UserCreateInput[] = [
     email: "mahmoud@prisma.io",
     username: "mahmoudthegod",
     password: "",
+    location: "Windsor, Ontario",
     posts: {
       create: [
         {
@@ -60,6 +63,8 @@ const userData: Prisma.UserCreateInput[] = [
 
 const plantData: Prisma.PlantCreateInput[] = [];
 
+const frostDateData: Prisma.FrostDateCreateInput[] = [];
+
 async function main() {
   console.log(`Start seeding... 🌱`);
 
@@ -67,10 +72,17 @@ async function main() {
   if ((await prisma.user.count()) > 0)
     throw Error("Database already has data 💥. Run `prisma migrate reset` to reseed 🌱.");
 
-  fs.createReadStream(path.resolve(__dirname, "PLANT_DATA.csv"))
+  // Seeding Plant Data
+  fs.createReadStream(path.resolve(__dirname, "PlantData.csv"))
     .pipe(csv.parse({ headers: true }))
-    .on("error", (error) => console.error(error))
+    .on("error", (error) => console.error("ERROR WHILE PARSING PLANT DATA", error))
     .on("data", (row) => {
+      row.SowIndoors = Number.parseInt(row.SowIndoors);
+      row.Transplant = Number.parseInt(row.Transplant);
+      row.SowOutdoors = Number.parseInt(row.SowOutdoors);
+      if (isNaN(row.SowIndoors)) row.SowIndoors = null;
+      if (isNaN(row.Transplant)) row.Transplant = null;
+      if (isNaN(row.SowOutdoors)) row.SowOutdoors = null;
       plantData.push(row);
       console.log(row);
     })
@@ -84,6 +96,24 @@ async function main() {
       }
     });
 
+  // Seeding Frost Date Data
+  fs.createReadStream(path.resolve(__dirname, "FrostDates.csv"))
+    .pipe(csv.parse({ headers: true }))
+    .on("error", (err) => console.error("ERROR WHILE PARSING FROST DATE DATA", err))
+    .on("data", (row) => {
+      frostDateData.push(row);
+      console.log(row);
+    })
+    .on("end", async (rowCount: number) => {
+      console.log(`Parsed ${rowCount} rows`);
+      for (const f of frostDateData) {
+        const frostDate = await prisma.frostDate.create({
+          data: f,
+        });
+        console.log(`Created Frost Date with id: ${frostDate.id}`);
+      }
+    });
+
   for (const u of userData) {
     u.password = await bcrypt.hash("sick_password", 10);
     const user = await prisma.user.create({
@@ -91,7 +121,6 @@ async function main() {
     });
     console.log(`Created user with id: ${user.id}`);
   }
-  console.log(`Seeding finished.`);
 }
 
 main()
@@ -100,5 +129,9 @@ main()
     process.exit(1);
   })
   .finally(async () => {
+    console.log("🌿 Plant Rows: ", await prisma.plant.count());
+    console.log("🍧 Frost Date Rows:", await prisma.frostDate.count());
+    console.log("👤 User Rows:", await prisma.user.count());
+    console.log(`🌱 Seeding Complete! ✅`);
     await prisma.$disconnect();
   });

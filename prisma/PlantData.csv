@@ -1,0 +1,20 @@
+CommonName,BotanicalName,PlantType,SunExposure,SoilpH,BloomTime,FlowerColour,HardinessZones,SeedDepth,SproutsIn,MinIdealTemp,PlantSpacing,FrostHardy,MinFullSun,RowWidth,DaystoMaturity,SowIndoors,Transplant,SowOutdoors
+Tomato,Solanum lycopersicum,Fruiting Vegetable,Full,"Acidic, Slightly Acidic to Neutral",Summer,Yellow,"4, 5, 6, 7, 8, 9, 10, 11",0.5-1cm,7-14 Days,25-35 C,45-60cm,NO,8-12hrs,1m,60-100,-6,1,
+Peppers,Capsicum sp.,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,White,"4, 5, 6, 7, 8, 9, 10, 11",1cm,8-21 Days,18-27 C,45cm,NO,8-12hrs,45cm,60-90,-7,1,
+Cucumber,Cucumis sativas,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,Yellow,"4, 5, 6, 7, 8, 9, 10, 11",1-2.5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90cm,45-75,-4,1,
+Beans,Phaseolus vulgaris,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,"White, Yellow","3, 4, 5, 6, 7, 8, 9, 10",2-5cm,8-16 Days,9-25 C,5-8cm,NO,8-12hrs,45-60cm,50-55,,,1
+Summer Squash,Cucurbita spp.,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,"Orange, Yellow","3, 4, 5, 6, 7, 8, 9",2-5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90-180cm,45-55,-4,3,2
+Winter Squash,Cucurbita spp.,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,"Orange, Yellow","3, 4, 5, 6, 7, 8, 9 ",2-5cm,7-14 Days,21-27 C,90-150cm,NO,8-12hrs,90-180cm,50-55,-3,3,2
+Carrots,Daucus carota subsp. Sativus,Root Vegetable,Full,Neutral,Second Summer,White,"3, 4, 5, 6, 7, 8, 9, 10",2-5mm,14-28 Days,10-24 C,5-8cm,YES,6-8hrs,30cm,60-120 ,,,-5
+Broccoli,Brassica oleracea,Vegetable,Full,Slightly Acidic to Neutral,"Summer, Fall",Yellow,"2, 3, 4, 5, 6, 7, 8, 9, 10, 11",0.5-1cm,5-8 Days,4C,30-50cm,YES,8-12hrs,90cm,55-85,-8,-4,
+Corn,Zea mays,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,"White, Yellow","4, 5, 6, 7, 8",2-5cm,7-10 Days,16C,20-30cm,NO,8-12hrs,20-30cm,60-100,,,0
+Kale,Brassica oleracea var. acephala,Leafy Green,"Full, Part",Neutral to Slightly Alkaline,"Summer, Fall",Yellow,"2, 3, 4, 5, 6, 7, 8, 9, 10, 11",0.5-1cm,5-8 Days,4C,30-50cm,YES,6-8hrs,90cm,55-85,-8,-4,
+Lettuce,Lactuca sativa,Leafy Green,"Full, Part",Slightly Acidic to Neutral,Summer,White,"2, 3, 4, 5, 6, 7, 8, 9, 10, 11",2-5mm,5-8 Days,4C,30-38cm,YES,6-8hrs,60cm,30,-5,-2,0
+Onions,Allium cepa,Root Vegetable,Full,Neutral,Second Summer,White,"3, 4, 5, 6, 7",1cm,7-10 Days,4C,10-12cm,YES,8-12hrs,30-45cm,100-175,-8,-2,0
+Peas,Pisum sativum,Fruiting Vegetable,Full,Slightly Acidic to Neutral,"Spring, Fall",Varies,"2, 3, 4, 5, 6, 7",1-2cm,21-30 Days,4C,5-7cm,YES,8-12hrs,45-75cm,60-70,,,-5
+Potatoes,Solanum tuberosum,Root Vegetable,Full,Acidic ,"Spring, Summer ",Pink,"3, 4, 5, 6, 7, 8, 9",7-10cm,12-16 Days,10C,30-36cm,NO,8-12hrs,75cm,90-120,,,2
+Spinach,Spinacia oleracea,Leafy Green,"Full, Part",Neutral,"Spring, Summer, Fall",Yellow,"4, 5, 6, 7, 8, 9",1-2cm,5 Days,2C,5cm,YES,6-8hrs,30-45cm,14,,,-5
+Celery,Apium graveolens,Vegetable,Full,Neutral,Second Summer,White,"2, 3, 4, 5, 6, 7, 8, 9, 10",2-5mm,14-21 Days,15C,5cm,NO,6-8hrs,30-45cm,140,-9,1,
+Eggplant,Solanum melongena,Fruiting Vegetable,Full,Slightly Acidic to Neutral,Summer,"Purple, White","5, 6, 7, 8, 9, 10, 11, 12",0.5-1cm,7-21 Days,14C,60cm,NO,8-12hrs,75cm,100-120,-7,3,
+Arugula,Euruca sativa,Leafy Green,"Full, Part",Slightly Acidic to Neutral,"Spring, Summer, Fall",White,"3, 4, 5, 6, 7, 8, 9, 10, 11",1cm,7 Days,4C,15cm,YES,6-8hrs,25cm,14-21,,,-4
+Radish,Raphanus sativus,Root Vegetable,Full,Neutral,Summer,White,"2, 3, 4, 5, 6, 7, 8, 9, 10, 11",1-2.5cm,3-5 Days,4C,5cm,YES,8hrs,25cm,21,,,-7

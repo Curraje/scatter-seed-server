@@ -4,7 +4,7 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  output = "../src/@generated/type-graphql"
+  output   = "../src/@generated/type-graphql"
 }
 
 datasource db {
@@ -17,19 +17,53 @@ enum UserRole {
   ADMIN
 }
 
+enum YesNo {
+  YES
+  NO
+}
+
 model User {
   /// @TypeGraphQL.omit(output: true)
-  id    Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  uuid  String  @default(uuid()) @unique
-  role  UserRole @default(USER)
-  username String @unique
-  email String  @unique
+  uuid      String   @unique @default(uuid())
+  role      UserRole @default(USER)
+  username  String   @unique
+  email     String   @unique
+  location  String?
   /// @TypeGraphQL.omit(output: true)
-  password String
-  name  String?
-  posts Post[]
+  password  String
+  name      String?
+  posts     Post[]
+  gardens   Garden[]
+}
+
+model Garden {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  height    Float
+  width     Float
+  beds      Bed[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Bed {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  coord_x   Float
+  coord_y   Float
+  name      String
+  height    Float
+  width     Float
+  plants    BedPlant[]
+  garden    Garden     @relation(fields: [gardenId], references: [id])
+  gardenId  Int
+  notes     String
 }
 
 model Post {
@@ -45,25 +79,50 @@ model Post {
 }
 
 model Plant {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  CommonName String
-  BotanicalName String
-  PlantType String
-  SunExposure String
-  SoilpH String
-  BloomTime String
-  FlowerColour String
+  id             Int        @id @default(autoincrement())
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  CommonName     String
+  BotanicalName  String
+  PlantType      String
+  SunExposure    String
+  SoilpH         String
+  BloomTime      String
+  FlowerColour   String
+  MinIdealTemp   String
   HardinessZones String
-  SeedDepth String
-  SproutsIn String
-  IdealTemp String
-  PlantSpacing String
-  FrostHardy String
-  MinFullSun String
-  RowWidth String
+  SeedDepth      String
+  SproutsIn      String
+  PlantSpacing   String
+  FrostHardy     YesNo
+  MinFullSun     String
+  RowWidth       String
   DaystoMaturity String
+  SowIndoors     Int?
+  Transplant     Int?
+  SowOutdoors    Int?
+  BedPlant       BedPlant[]
 }
 
+model BedPlant {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  plant     Plant    @relation(fields: [plantId], references: [id])
+  Bed       Bed?     @relation(fields: [bedId], references: [id])
+  bedId     Int?
+  plantId   Int
+}
 
+model FrostDate {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Province      String
+  City          String
+  LastFrost     String
+  FirstFrost    String
+  HardinessZone String
+
+  @@unique([Province, City])
+}
